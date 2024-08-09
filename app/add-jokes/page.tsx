@@ -20,7 +20,7 @@ const AddJokes = () => {
       setCategories(response.data.body.categories);
     }
     fetchCategories();
-  }, []);
+  });
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
