@@ -1,5 +1,3 @@
-from io import BytesIO
-
 # Content for the README file
 
 readme_content = """
