@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Jokes Microservices Platform
+This platform allows users to submit and view jokes using a microservices architecture. The backend services are built with NestJS, the frontend is developed using Next.js, and the platform is containerized using Docker. It is hosted on Google Cloud Platform (GCP) and Vercel.
 
-## Getting Started
+Table of Contents
+Overview
+Architecture
+Technologies Used
+Repositories
+Hosted URLs
+Environment Setup
+Running Locally
+Additional Resources
+Overview
+This project is a microservices-based joke platform. Users can submit jokes and view them through a frontend interface. The platform consists of two backend services: one for submitting jokes and another for delivering jokes. The frontend is hosted on Vercel, while the backend services are hosted on Google Cloud Run.
 
-First, run the development server:
+Architecture
+Frontend: Built using Next.js and hosted on Vercel.
+Backend: Built with NestJS using two microservices:
+Submit Jokes Service: Handles joke submissions and stores them in MongoDB.
+Deliver Jokes Service: Retrieves jokes from a MySQL database and serves them to the frontend.
+Databases:
+MongoDB: Used for storing submitted jokes.
+MySQL: Used for storing and retrieving delivered jokes.
+Message Broker: RabbitMQ is used to trigger and manage communication between the microservices.
+Technologies Used
+AI Tools:
+Perplexity AI
+ChatGPT
+Hosting Platforms:
+Google Cloud Platform (GCP)
+Vercel
+Databases:
+MongoDB (Cloud MongoDB)
+SQL (Cloud SQL on GCP)
+Backend Framework: NestJS
+Frontend Framework: Next.js
+ORM: Prisma
+Containerization: Docker
+Message Broker: RabbitMQ
+Repositories
+Frontend: Jokes Frontend Repo
+Submit Jokes Server: Submit Jokes Repo
+Deliver Jokes Server: Deliver Jokes Repo
+Hosted URLs
+Frontend: https://jokes-front.vercel.app/
+Submit Jokes Service: https://submit-jokes-sopoqaryjq-uc.a.run.app
+Deliver Jokes Service: https://deliver-jokes-sopoqaryjq-uc.a.run.app (Note: Deployed but currently experiencing an error)
+Environment Setup
+To run the project locally, clone all the repositories and set up the following environment variables:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Frontend Environment Variables
+makefile
+Copy code
+DELIVERY_JOKE="http://localhost:3010/api"
+SUBMIT_JOKE="http://localhost:3011/api"
+Submit Jokes Backend Environment Variables
+makefile
+Copy code
+DATABASE_URL="mongodb+srv://jokeUser:cc09UC26vEdEGU92@jokescluster.gqctc.mongodb.net/jokesDatabase?retryWrites=true&w=majority&appName=JokesCluster"
+PORT=3011
+Deliver Jokes Backend Environment Variables
+makefile
+Copy code
+DATABASE_URL="mysql://testUser:8n{sg&oHaD6Ch@35.184.42.224:3306/jokes"
+PORT=3010
+If the Cloud SQL database connection does not work due to GCP security settings, use the following local database connection:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ruby
+Copy code
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# DATABASE_URL="mysql://root:12345678@localhost:3306/jokes"
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Running Locally
+Backend
+Navigate to the Submit Jokes and Deliver Jokes Repositories:
 
-## Learn More
+bash
+Copy code
+cd submit-jokes
+cd deliver-jokes
+Push Database Schema to DB:
 
-To learn more about Next.js, take a look at the following resources:
+bash
+Copy code
+yarn prisma db push
+Start Development Server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+bash
+Copy code
+yarn start:dev
+Start RabbitMQ Listener:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+bash
+Copy code
+yarn listen
+Frontend
+Navigate to the Jokes Frontend Repository:
 
-## Deploy on Vercel
+bash
+Copy code
+cd jokes-front
+Start the Frontend Development Server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+bash
+Copy code
+yarn next dev
+Additional Resources
+RabbitMQ: Used for triggering and managing communication between microservices.
+Prisma: Used as the ORM for both MongoDB and MySQL databases.
+Docker: Used for containerizing the application for deployment on Google Cloud Run.
