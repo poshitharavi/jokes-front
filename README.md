@@ -1,7 +1,3 @@
-# Content for the README file
-
-readme_content = """
-
 # Jokes Microservices Platform
 
 This platform allows users to submit and view jokes using a microservices architecture. The backend services are built with NestJS, the frontend is developed using Next.js, and the platform is containerized using Docker. It is hosted on Google Cloud Platform (GCP) and Vercel.
@@ -66,3 +62,77 @@ This project is a microservices-based joke platform. Users can submit jokes and 
 To run the project locally, clone all the repositories and set up the following environment variables:
 
 ### Frontend Environment Variables
+
+```
+DELIVERY_JOKE="http://localhost:3010/api"
+SUBMIT_JOKE="http://localhost:3011/api"
+```
+
+### Submit Jokes Backend Environment Variables
+
+```
+DATABASE_URL="mongodb+srv://jokeUser:cc09UC26vEdEGU92@jokescluster.gqctc.mongodb.net/jokesDatabase?retryWrites=true&w=majority&appName=JokesCluster"
+PORT=3011
+```
+
+### Deliver Jokes Backend Environment Variables
+
+```
+DATABASE_URL="mysql://testUser:8n{sg&oHaD6Ch@35.184.42.224:3306/jokes"
+PORT=3010
+```
+
+If the Cloud SQL database connection does not work due to GCP security settings, use the following local database connection:
+
+```
+# DATABASE_URL="mysql://root:12345678@localhost:3306/jokes"
+```
+
+## Running Locally
+
+### Backend
+
+1. **Navigate to the Submit Jokes and Deliver Jokes Repositories:**
+
+   ```bash
+   cd submit-jokes
+   cd deliver-jokes
+   ```
+
+2. **Push Database Schema to DB:**
+
+   ```bash
+   yarn prisma db push
+   ```
+
+3. **Start Development Server:**
+
+   ```bash
+   yarn start:dev
+   ```
+
+4. **Start RabbitMQ Listener:**
+
+   ```bash
+   yarn listen
+   ```
+
+### Frontend
+
+1. **Navigate to the Jokes Frontend Repository:**
+
+   ```bash
+   cd jokes-front
+   ```
+
+2. **Start the Frontend Development Server:**
+
+   ```bash
+   yarn next dev
+   ```
+
+## Additional Resources
+
+- **RabbitMQ**: Used for triggering and managing communication between microservices.
+- **Prisma**: Used as the ORM for both MongoDB and MySQL databases.
+- **Docker**: Used for containerizing the application for deployment on Google Cloud Run.
